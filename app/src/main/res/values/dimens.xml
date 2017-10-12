@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btnPadding">20dp</dimen>
+    <dimen name="welcome_mgs_size">30sp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="margin_welcome_msg">25dp</dimen>
+    <dimen name="btn_margin">20dp</dimen>
+    <dimen name="user_name_text_size">20sp</dimen>
+    <dimen name="screen_name_text_size">15sp</dimen>
+    <dimen name="image_size">175dp</dimen>
+    <dimen name="visitor_image_size">60dp</dimen>
+    <dimen name="welcome_msg_top_margin">50dp</dimen>
+    <dimen name="profile_pic_top_margin">80dp</dimen>
+    <dimen name="indicator_size">100dp</dimen>
+
+</resources>

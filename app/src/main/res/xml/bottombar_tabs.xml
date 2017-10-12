@@ -1,0 +1,22 @@
+<tabs>
+
+    <tab
+        icon="@drawable/ic_home"
+        id="@+id/tab_home"
+        title="Home" />
+    <tab
+        icon="@drawable/ic_star"
+        id="@+id/tab_rate"
+        title="Rate" />
+
+
+    <tab
+        icon="@drawable/ic_share"
+        id="@+id/tab_share"
+        title="Share" />
+
+    <tab
+        icon="@drawable/ic_exit_to_app"
+        id="@+id/tab_logout"
+        title="Log Out" />
+</tabs>
