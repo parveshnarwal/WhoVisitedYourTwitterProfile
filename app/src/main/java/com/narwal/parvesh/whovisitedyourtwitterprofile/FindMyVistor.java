@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.gson.Gson;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
@@ -45,6 +47,9 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
     AVLoadingIndicatorView avLoadingIndicatorView;
     BottomBar bottomBar;
     Typeface roboto;
+
+    private InterstitialAd mInterstitialAd;
+
 
 
     @Override
@@ -87,6 +92,10 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
 
         bottomBar.setTabTitleTypeface(FontCache.get("font/Roboto-Light.ttf", this));
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4327820221556313/1196061324");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
     }
 
     private void setUserProfilePic(TwitterSession twitterSession) {
@@ -114,6 +123,9 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
         switch(view.getId()){
             case R.id.btnFindVisitors:
                 startLoading();
+                if(mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                }
                 findMyVisitors();
                 break;
         }
@@ -155,6 +167,7 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
         welcomeMsg.setVisibility(View.GONE);
         bottomBar.setVisibility(View.GONE);
         avLoadingIndicatorView.show();
+
     }
 
     void stopLoading(){
@@ -172,6 +185,12 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
+
+                if(mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                }
+
+
                 if(tabId == R.id.tab_home){
                         //do  nothing
 
@@ -179,6 +198,7 @@ public class FindMyVistor extends Activity implements View.OnClickListener {
 
                 else if(tabId == R.id.tab_rate){
                     //open play store
+
 
                     final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
                     try {

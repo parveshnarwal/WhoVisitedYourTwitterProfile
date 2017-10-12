@@ -19,6 +19,7 @@ public class LogOut extends Activity implements View.OnClickListener {
 
     Button logout, goBack;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
