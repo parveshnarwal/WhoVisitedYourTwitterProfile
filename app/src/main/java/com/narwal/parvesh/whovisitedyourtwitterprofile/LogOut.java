@@ -23,7 +23,7 @@ public class LogOut extends Activity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logout);
-
+        //now set up activity
         setup_activity();
     }
 
