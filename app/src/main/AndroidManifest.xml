@@ -22,7 +22,6 @@
         </activity>
         <activity android:name=".FindMyVisitors"/>
         <activity android:name=".Visitors"/>
-        <activity android:name=".LogOut"/>
     </application>
 
 

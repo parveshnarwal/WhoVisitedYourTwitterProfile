@@ -1,79 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/find_my_visitors_bgrnd">
-
-    <!--<View-->
-    <!--android:id="@+id/opacityFilter"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:alpha="0.3">-->
-    <!--</View>-->
-
-
-    <!--<ImageView-->
-        <!--android:id="@+id/ivProfilePic"-->
-        <!--android:layout_width="@dimen/image_size"-->
-        <!--android:layout_height="@dimen/image_size"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="@dimen/profile_pic_top_margin"-->
-        <!--android:contentDescription="@string/app_name"-->
-        <!--android:src="@mipmap/ic_launcher" />-->
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/ivProfilePic"
-        android:layout_width="@dimen/image_size"
-        android:layout_height="@dimen/image_size"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/profile_pic_top_margin"
-        android:src="@mipmap/ic_launcher"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#2ba7ef"/>
 
     <TextView
         android:id="@+id/tvWelcomMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:layout_margin="@dimen/margin_welcome_msg"
-        android:layout_below="@+id/ivProfilePic"
+        android:gravity="center"
         android:text="@string/welcome_msg"
         android:textColor="#FFF"
         android:textSize="@dimen/welcome_mgs_size" />
 
+    <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ivProfilePic"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_below="@+id/tvWelcomMsg"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/button_sqaure_shape"
+        android:contentDescription="@string/app_name" />
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView"
         android:layout_width="@dimen/indicator_size"
         android:layout_height="@dimen/indicator_size"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        style="@style/AVLoadingIndicatorView"
         android:visibility="gone"
-        app:indicatorName="PacmanIndicator"
-        app:indicatorColor="#FFF" />
+        app:indicatorColor="#FFF"
+        app:indicatorName="PacmanIndicator" />
 
     <Button
         android:id="@+id/btnFindVisitors"
+        style="@style/button_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvWelcomMsg"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_sqaure_shape"
-        android:layout_margin="@dimen/btn_margin"
-        android:drawableLeft="@drawable/ic_search_white_24dp"
-        android:padding="@dimen/btnPadding"
+        android:layout_height="75dp"
+        android:layout_above="@+id/LogOut"
+        android:layout_marginBottom="@dimen/btn_bottom_margin"
+        android:drawableLeft="@drawable/ic_search"
         android:text="@string/find_my_profile_visitors_btn"
-        android:textColor="#FFF"
-        android:textSize="@dimen/button_text_size"
         tools:ignore="RtlHardcoded" />
 
+
+    <Button
+        android:id="@+id/LogOut"
+        style="@style/button_style"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/btn_bottom_margin"
+        android:drawableLeft="@drawable/ic_exit"
+        android:text="@string/log_out"
+        tools:ignore="RtlHardcoded" />
 
 
 </RelativeLayout>

@@ -1,21 +1,17 @@
 package com.narwal.parvesh.whovisitedyourtwitterprofile;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
-import com.roughike.bottombar.OnTabSelectListener;
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -26,19 +22,18 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 
 /**
  * Created by Parvesh on 09-Sep-17.
  */
 
-public class FindMyVisitors extends Activity implements View.OnClickListener {
+public class FindMyVisitors extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnFindVisitors;
     private TwitterSession twitterSession;
     private Long userID;
-    private CircleImageView ivProfilePic;
+    private ImageView ivProfilePic;
     private TextView welcomeMsg;
     WhoVisitedYourTwitterProfile app;
     AVLoadingIndicatorView avLoadingIndicatorView;
@@ -75,7 +70,7 @@ public class FindMyVisitors extends Activity implements View.OnClickListener {
     private void init_app() {
 
         btnFindVisitors = (Button) findViewById(R.id.btnFindVisitors);
-        ivProfilePic = (CircleImageView) findViewById(R.id.ivProfilePic);
+        ivProfilePic = (ImageView) findViewById(R.id.ivProfilePic);
         welcomeMsg = (TextView) findViewById(R.id.tvWelcomMsg);
         avLoadingIndicatorView = (AVLoadingIndicatorView) findViewById(R.id.avi);
         btnFindVisitors.setOnClickListener(this);

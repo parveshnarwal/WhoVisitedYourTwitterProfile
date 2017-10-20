@@ -5,21 +5,12 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/vst_hdr"
-        android:contentDescription="@string/app_name"
-        android:adjustViewBounds="true"
-        android:id="@+id/header"/>
-
     <ListView
         android:id="@+id/list"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:layout_below="@+id/header"/>
+        android:dividerHeight="10.0sp"/>
 
 
 
