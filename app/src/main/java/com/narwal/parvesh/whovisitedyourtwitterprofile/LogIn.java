@@ -3,11 +3,8 @@ package com.narwal.parvesh.whovisitedyourtwitterprofile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Result;
@@ -18,8 +15,6 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-
-import retrofit2.Call;
 
 public class LogIn extends Activity {
 
@@ -48,7 +43,7 @@ public class LogIn extends Activity {
 
                 app.setUserID(result.data.getUserId());
 
-                Intent intent = new Intent(LogIn.this, FindMyVistor.class);
+                Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
 
                 startActivity(intent);
             }

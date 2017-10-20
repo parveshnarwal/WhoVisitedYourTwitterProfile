@@ -74,13 +74,6 @@
         android:textSize="@dimen/button_text_size"
         tools:ignore="RtlHardcoded" />
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar_fmv"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"
-        app:bb_inActiveTabColor="#2ba7ef"
-        app:bb_activeTabColor="#2ba7ef"/>
+
 
 </RelativeLayout>

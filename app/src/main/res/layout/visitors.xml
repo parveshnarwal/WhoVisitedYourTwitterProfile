@@ -19,17 +19,9 @@
         android:layout_width="wrap_content"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:layout_above="@+id/bottomBar_visitors"
         android:layout_below="@+id/header"/>
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar_visitors"
-        android:layout_alignParentBottom="true"
-        android:layout_height="60dp"
-        android:layout_width="match_parent"
-        app:bb_activeTabColor="#2ba7ef"
-        app:bb_inActiveTabColor="#2ba7ef"
-        app:bb_tabXmlResource="@xml/bottombar_visitor" />
+
 
 
 </RelativeLayout>
