@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
@@ -28,6 +29,20 @@ public class LogIn extends Activity {
         setContentView(R.layout.activity_log_in);
 
 
+        //check here if we have already logged in
+//        WhoVisitedYourTwitterProfile sharedPrefData;
+//
+//        try{
+//            sharedPrefData = Utils.getSavedObjectFromPreference(LogIn.this, "TwitterData", "twittersession", WhoVisitedYourTwitterProfile.class);
+//
+//            if(sharedPrefData != null){
+//                Toast.makeText(LogIn.this, "I have data already", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//        catch(Exception e){
+//
+//        }
 
         loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -43,6 +58,10 @@ public class LogIn extends Activity {
 
                 app.setUserID(result.data.getUserId());
 
+                //lets save this data in shared preferences
+
+//               Utils.saveObjectToSharedPreference(LogIn.this, "TwitterData", "twittersession", app);
+
                 Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
 
                 startActivity(intent);
@@ -56,6 +75,8 @@ public class LogIn extends Activity {
         });
 
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

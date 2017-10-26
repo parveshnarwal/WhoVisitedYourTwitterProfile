@@ -17,6 +17,7 @@ public class WhoVisitedYourTwitterProfile extends Application {
     private TwitterSession twitterSession;
     private List<DirectMessage> directMessageList;
     private User user;
+    private List<User> followers;
 
     Long userID;
 
@@ -53,4 +54,11 @@ public class WhoVisitedYourTwitterProfile extends Application {
     }
 
 
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
 }

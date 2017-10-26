@@ -35,6 +35,10 @@ class MyTwitterApiClient extends TwitterApiClient {
         return  getService(GetUserInfo.class);
     }
 
+    public FollowersList getFollowersList(){
+        return  getService(FollowersList.class);
+    }
+
 }
 
 

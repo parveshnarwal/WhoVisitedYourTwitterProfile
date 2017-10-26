@@ -30,7 +30,7 @@ import retrofit2.Call;
 
 public class FindMyVisitors extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnFindVisitors;
+    private Button btnFindVisitors, btnLogOut;
     private TwitterSession twitterSession;
     private Long userID;
     private ImageView ivProfilePic;
@@ -70,13 +70,16 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
     private void init_app() {
 
         btnFindVisitors = (Button) findViewById(R.id.btnFindVisitors);
+        btnLogOut = (Button) findViewById(R.id.LogOut);
         ivProfilePic = (ImageView) findViewById(R.id.ivProfilePic);
         welcomeMsg = (TextView) findViewById(R.id.tvWelcomMsg);
         avLoadingIndicatorView = (AVLoadingIndicatorView) findViewById(R.id.avi);
         btnFindVisitors.setOnClickListener(this);
+        btnLogOut.setOnClickListener(this);
 
         welcomeMsg.setTypeface(FontCache.get("font/Roboto-Light.ttf", this));
         btnFindVisitors.setTypeface(FontCache.get("font/Roboto-Light.ttf", this));
+        btnLogOut.setTypeface(FontCache.get("font/Roboto-Light.ttf", this));
 
 
         mInterstitialAd = new InterstitialAd(this);
@@ -112,6 +115,11 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
                 startLoading();
                 findMyVisitors();
                 break;
+
+            case R.id.LogOut:
+                Intent intent = new Intent(FindMyVisitors.this, LogIn.class);
+                startActivity(intent);
+                break;
         }
 
 
@@ -127,14 +135,8 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
             public void success(Result<List<DirectMessage>> result) {
                 List<DirectMessage> DMs = result.data;
                 app.setDirectMessageList(DMs);
-                if (DMs.size() > 0) {
-                    Intent intent = new Intent(FindMyVisitors.this, Visitors.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(FindMyVisitors.this, "Sorry! We could not find any visitors on your profile. Please check again.", Toast.LENGTH_SHORT).show();
-                }
+                getFollowersList();
 
-                stopLoading();
             }
 
             @Override
@@ -142,21 +144,57 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(FindMyVisitors.this, "Sorry! Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // we have got the DMs now get some followers
+
+    }
+
+    public void getFollowersList() {
+
+        MyTwitterApiClient myTwitterApiClient = new MyTwitterApiClient(twitterSession);
+
+        Call<ListOfUser> cb_followers = myTwitterApiClient.getFollowersList().show();
+        cb_followers.enqueue(new Callback<ListOfUser>() {
+            @Override
+            public void success(Result<ListOfUser> result) {
+                List<User> listOfUsers = result.data.users;
+                app.setFollowers(listOfUsers);
+                if (listOfUsers.size() > 0) {
+                    Intent intent = new Intent(FindMyVisitors.this, Visitors.class);
+                    stopLoading();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(FindMyVisitors.this, "Sorry! We could not find any visitors on your profile. Please check again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Toast.makeText(FindMyVisitors.this, "Sorry! Something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     void startLoading() {
         ivProfilePic.setVisibility(View.GONE);
         btnFindVisitors.setVisibility(View.GONE);
+        btnLogOut.setVisibility(View.GONE);
         welcomeMsg.setVisibility(View.GONE);
         avLoadingIndicatorView.show();
+
+        getSupportActionBar().hide();
 
     }
 
     void stopLoading() {
         avLoadingIndicatorView.hide();
         ivProfilePic.setVisibility(View.VISIBLE);
+        btnLogOut.setVisibility(View.VISIBLE);
         btnFindVisitors.setVisibility(View.VISIBLE);
         welcomeMsg.setVisibility(View.VISIBLE);
+        getSupportActionBar().show();
+
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }

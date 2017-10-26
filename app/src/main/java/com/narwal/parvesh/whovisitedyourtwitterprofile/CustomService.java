@@ -25,6 +25,13 @@ public interface CustomService {
                          @Query("include_user_entities") Boolean var2);
 }
 
+
+interface FollowersList {
+
+    @GET("/1.1/followers/list.json")
+    Call<ListOfUser>     show();
+}
+
 interface FollowersIDs{
     @GET("/1.1/followers/ids.json")
     Call<ListOfIDs>     show(

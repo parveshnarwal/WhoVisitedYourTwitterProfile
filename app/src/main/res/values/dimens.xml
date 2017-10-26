@@ -2,7 +2,7 @@
 <resources>
     <dimen name="btnPadding">20dp</dimen>
     <dimen name="welcome_mgs_size">30sp</dimen>
-    <dimen name="button_text_size">20sp</dimen>
+    <!--<dimen name="button_text_size">20sp</dimen>-->
     <dimen name="margin_welcome_msg">25dp</dimen>
     <dimen name="btn_margin">20dp</dimen>
     <dimen name="user_name_text_size">20sp</dimen>
