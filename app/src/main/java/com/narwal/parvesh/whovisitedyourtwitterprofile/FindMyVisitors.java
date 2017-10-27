@@ -1,6 +1,8 @@
 package com.narwal.parvesh.whovisitedyourtwitterprofile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.models.User;
@@ -117,6 +120,12 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.LogOut:
+                SharedPreferences sharedPreferences = getSharedPreferences("LogOutPressEvent", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putBoolean("IsLogOutPressed", true);
+                editor.apply();
+
                 Intent intent = new Intent(FindMyVisitors.this, LogIn.class);
                 startActivity(intent);
                 break;

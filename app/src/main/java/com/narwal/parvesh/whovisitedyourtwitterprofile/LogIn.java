@@ -1,7 +1,9 @@
 package com.narwal.parvesh.whovisitedyourtwitterprofile;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,54 +30,67 @@ public class LogIn extends Activity {
 
         setContentView(R.layout.activity_log_in);
 
+        final SharedPreferences sharedPreferences = getSharedPreferences("LogOutPressEvent", Context.MODE_PRIVATE);
 
-        //check here if we have already logged in
-//        WhoVisitedYourTwitterProfile sharedPrefData;
-//
-//        try{
-//            sharedPrefData = Utils.getSavedObjectFromPreference(LogIn.this, "TwitterData", "twittersession", WhoVisitedYourTwitterProfile.class);
-//
-//            if(sharedPrefData != null){
-//                Toast.makeText(LogIn.this, "I have data already", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//        catch(Exception e){
-//
-//        }
+        Boolean IsLogOutPressed = sharedPreferences.getBoolean("IsLogOutPressed", false);
 
-        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
-        loginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
 
-                final TwitterSession activeSession = TwitterCore.getInstance()
-                        .getSessionManager().getActiveSession();
 
-                WhoVisitedYourTwitterProfile app = (WhoVisitedYourTwitterProfile) getApplication();
+        if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null && !IsLogOutPressed) {
 
-                app.setTwitterSession(activeSession);
+            TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
 
-                app.setUserID(result.data.getUserId());
+            Toast.makeText(this, "Already Logged In As: @" + twitterSession.getUserName(), Toast.LENGTH_SHORT).show();
 
-                //lets save this data in shared preferences
+            WhoVisitedYourTwitterProfile app = (WhoVisitedYourTwitterProfile) getApplication();
 
-//               Utils.saveObjectToSharedPreference(LogIn.this, "TwitterData", "twittersession", app);
+            app.setTwitterSession(twitterSession);
+            app.setUserID(twitterSession.getUserId());
 
-                Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
 
-                startActivity(intent);
-            }
+            Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
 
-            @Override
-            public void failure(TwitterException exception) {
-                // Do something on failure
-                Log.d("TwitterKit", "Login with Twitter failure", exception);
-            }
-        });
+            startActivity(intent);
+
+
+        } else {
+
+            loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+            loginButton.setCallback(new Callback<TwitterSession>() {
+                @Override
+                public void success(Result<TwitterSession> result) {
+
+                    final TwitterSession activeSession = TwitterCore.getInstance()
+                            .getSessionManager().getActiveSession();
+
+                    WhoVisitedYourTwitterProfile app = (WhoVisitedYourTwitterProfile) getApplication();
+
+                    app.setTwitterSession(activeSession);
+
+                    app.setUserID(result.data.getUserId());
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putBoolean("IsLogOutPressed", false);
+
+                    editor.apply();
+
+                    Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
+
+                    startActivity(intent);
+                }
+
+                @Override
+                public void failure(TwitterException exception) {
+                    // Do something on failure
+                    Log.d("TwitterKit", "Login with Twitter failure", exception);
+                }
+            });
+
+        }
+
 
     }
-
 
 
     @Override

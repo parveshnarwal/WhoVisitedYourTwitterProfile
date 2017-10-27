@@ -3,9 +3,11 @@ package com.narwal.parvesh.whovisitedyourtwitterprofile;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -62,6 +64,18 @@ public class Visitors extends AppCompatActivity {
 
 
         visitors_list.setAdapter(new TwitterUserListAdapter(this, user_names, screen_names, picURLs));
+
+        visitors_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(Visitors.this, screen_names.get(i), Toast.LENGTH_SHORT).show();
+                OpenTwitterProfile(screen_names.get(i));
+            }
+        });
+    }
+
+    private void OpenTwitterProfile(String screenName) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + screenName)));
     }
 
 
