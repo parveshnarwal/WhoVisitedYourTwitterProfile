@@ -23,7 +23,8 @@
         android:layout_height="@dimen/image_size"
         android:layout_below="@+id/tvWelcomMsg"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/ic_launcher_2"
+        android:padding="4dp"
         android:background="@drawable/button_sqaure_shape"
         android:contentDescription="@string/app_name" />
 

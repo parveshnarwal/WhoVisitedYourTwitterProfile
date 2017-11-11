@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Result;
@@ -26,6 +30,12 @@ public class LogIn extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //full screen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         initializeTwitter();
 
         setContentView(R.layout.activity_log_in);
@@ -33,7 +43,6 @@ public class LogIn extends Activity {
         final SharedPreferences sharedPreferences = getSharedPreferences("LogOutPressEvent", Context.MODE_PRIVATE);
 
         Boolean IsLogOutPressed = sharedPreferences.getBoolean("IsLogOutPressed", false);
-
 
 
         if (TwitterCore.getInstance().getSessionManager().getActiveSession() != null && !IsLogOutPressed) {
@@ -53,41 +62,41 @@ public class LogIn extends Activity {
             startActivity(intent);
 
 
-        } else {
-
-            loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
-            loginButton.setCallback(new Callback<TwitterSession>() {
-                @Override
-                public void success(Result<TwitterSession> result) {
-
-                    final TwitterSession activeSession = TwitterCore.getInstance()
-                            .getSessionManager().getActiveSession();
-
-                    WhoVisitedYourTwitterProfile app = (WhoVisitedYourTwitterProfile) getApplication();
-
-                    app.setTwitterSession(activeSession);
-
-                    app.setUserID(result.data.getUserId());
-
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                    editor.putBoolean("IsLogOutPressed", false);
-
-                    editor.apply();
-
-                    Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
-
-                    startActivity(intent);
-                }
-
-                @Override
-                public void failure(TwitterException exception) {
-                    // Do something on failure
-                    Log.d("TwitterKit", "Login with Twitter failure", exception);
-                }
-            });
-
         }
+
+        loginButton = (TwitterLoginButton) findViewById(R.id.login_button);
+
+
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+
+                final TwitterSession activeSession = TwitterCore.getInstance()
+                        .getSessionManager().getActiveSession();
+
+                WhoVisitedYourTwitterProfile app = (WhoVisitedYourTwitterProfile) getApplication();
+
+                app.setTwitterSession(activeSession);
+
+                app.setUserID(result.data.getUserId());
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putBoolean("IsLogOutPressed", false);
+
+                editor.apply();
+
+                Intent intent = new Intent(LogIn.this, FindMyVisitors.class);
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                Log.d("TwitterKit", "Login with Twitter failure", exception);
+            }
+        });
 
 
     }
@@ -109,4 +118,10 @@ public class LogIn extends Activity {
                 .build();
         Twitter.initialize(config);
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        finish();
+//    }
 }

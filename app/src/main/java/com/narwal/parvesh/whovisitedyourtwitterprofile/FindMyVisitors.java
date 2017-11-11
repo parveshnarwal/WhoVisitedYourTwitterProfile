@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.picasso.Picasso;
@@ -42,6 +43,8 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
     AVLoadingIndicatorView avLoadingIndicatorView;
     Typeface roboto;
 
+    private Intent visitorIntent;
+
     private InterstitialAd mInterstitialAd;
 
 
@@ -60,11 +63,43 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
 
         app = (WhoVisitedYourTwitterProfile) getApplicationContext();
 
-        twitterSession = app.getTwitterSession();
+        //twitterSession = app.getTwitterSession();
 
-        userID = app.getUserID();
+        try {
+            twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
+            userID = app.getUserID();
 
-        setUserProfilePic(twitterSession);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sorry! Something went wrong!", Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = getSharedPreferences("LogOutPressEvent", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("IsLogOutPressed", true);
+            editor.apply();
+
+            Intent intent = new Intent(FindMyVisitors.this, LogIn.class);
+            startActivity(intent);
+
+        }
+
+
+        if(twitterSession != null){
+            setUserProfilePic(twitterSession);
+
+        }
+
+        else{
+            Toast.makeText(this, "Session Expired. Please log in again.", Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = getSharedPreferences("LogOutPressEvent", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("IsLogOutPressed", true);
+            editor.apply();
+
+            Intent intent = new Intent(FindMyVisitors.this, LogIn.class);
+            startActivity(intent);
+        }
 
 
     }
@@ -89,9 +124,19 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
         mInterstitialAd.setAdUnitId("ca-app-pub-4327820221556313/1196061324");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                startActivity(visitorIntent);
+            }
+        });
+
     }
 
     private void setUserProfilePic(TwitterSession twitterSession) {
+
         MyTwitterApiClient myTwitterApiClient = new MyTwitterApiClient(twitterSession);
         Call<User> cb = myTwitterApiClient.getUserInfo().show(userID);
 
@@ -143,6 +188,7 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
             @Override
             public void success(Result<List<DirectMessage>> result) {
                 List<DirectMessage> DMs = result.data;
+
                 app.setDirectMessageList(DMs);
                 getFollowersList();
 
@@ -169,9 +215,9 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
                 List<User> listOfUsers = result.data.users;
                 app.setFollowers(listOfUsers);
                 if (listOfUsers.size() > 0) {
-                    Intent intent = new Intent(FindMyVisitors.this, Visitors.class);
+                    visitorIntent = new Intent(FindMyVisitors.this, Visitors.class);
                     stopLoading();
-                    startActivity(intent);
+//                    startActivity(intent);
                 } else {
                     Toast.makeText(FindMyVisitors.this, "Sorry! We could not find any visitors on your profile. Please check again.", Toast.LENGTH_SHORT).show();
                 }
@@ -206,9 +252,12 @@ public class FindMyVisitors extends AppCompatActivity implements View.OnClickLis
 
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
+        } else {
+            startActivity(visitorIntent);
         }
 
     }
+
 
 }
 

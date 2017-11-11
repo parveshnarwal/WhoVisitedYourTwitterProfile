@@ -15,27 +15,27 @@
         <!--android:src="@mipmap/ic_launcher"-->
         <!--android:contentDescription="@string/app_name" />-->
 
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageView"
         android:layout_width="@dimen/visitor_image_size"
         android:layout_height="@dimen/visitor_image_size"
-        android:layout_alignParentTop="true"
         app:civ_border_width="2dp"
         app:civ_border_color="#2ba7ef"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_name_is_here"
         android:id="@+id/tvName"
         android:layout_alignParentTop="true"
         android:textSize="@dimen/user_name_text_size"
         android:textColor="#FFF"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_toLeftOf="@+id/tvIndex"
+        android:layout_alignLeft="@+id/tvUsername"
+        android:layout_alignStart="@+id/tvUsername" />
 
 
     <TextView
@@ -51,5 +51,17 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_alignBottom="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tvIndex"
+        android:textColor="#FFF"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textSize="@dimen/user_name_text_size"
+        android:text="@string/index"
+        android:layout_alignParentTop="true"/>
 
 </RelativeLayout>
